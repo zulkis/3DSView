@@ -296,22 +296,12 @@ public class D3SView extends WebView
 
         urlReturned = false;
 
-        List<NameValuePair> params = new LinkedList<NameValuePair>();
+        String postString = String.format("PaReq=%s&MD=%s&TermUrl=%s",
+                paReq,
+                md,
+                this.postbackUrl);
 
-        params.add(new BasicNameValuePair("MD", md));
-        params.add(new BasicNameValuePair("TermUrl", this.postbackUrl));
-        params.add(new BasicNameValuePair("PaReq", paReq));
-
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        try
-        {
-            new UrlEncodedFormEntity(params, HTTP.UTF_8).writeTo(bos);
-        }
-        catch (IOException e)
-        {
-        }
-
-        postUrl(acsUrl, bos.toByteArray());
+        postUrl(acsUrl, postString.getBytes(Charset.forName("UTF-8")));
     }
 
     class D3SJSInterface
